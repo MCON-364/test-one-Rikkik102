@@ -74,13 +74,13 @@ public class BasicStreamsQuiz {
                 .getAsDouble();
     }
 
-    public static void main(String[] args) {
-        BasicStreamsQuiz basicStreamsQuiz = new BasicStreamsQuiz();
-        for (String s: basicStreamsQuiz.getSortedCourseNames()) {
-            System.out.println(s);
-        }
-        System.out.println(basicStreamsQuiz.countScoresAtLeast(12));
-        System.out.println(basicStreamsQuiz.countScoresAtLeast(92));
-        System.out.println(basicStreamsQuiz.averagePassingScore());
-    }
+//    public static void main(String[] args) {
+//        BasicStreamsQuiz basicStreamsQuiz = new BasicStreamsQuiz();
+//        for (String s: basicStreamsQuiz.getSortedCourseNames()) {
+//            System.out.println(s);
+//        }
+//        System.out.println(basicStreamsQuiz.countScoresAtLeast(12));
+//        System.out.println(basicStreamsQuiz.countScoresAtLeast(92));
+//        System.out.println(basicStreamsQuiz.averagePassingScore());
+//    }
 }
