@@ -51,8 +51,10 @@ public class FunctionalWarmup {
      *
      */
     public static Function<String, Integer> wordCounter() {
-        Function<String, Integer> wordsInString = sentence ->
-                sentence.trim().split("\\s+").length;
+        Function<String, Integer> wordsInString = sentence -> {
+            if (sentence.trim().isEmpty()) return 0;
+            return sentence.trim().split("\\s+").length;
+        };
         return wordsInString;
     }
 
@@ -69,8 +71,8 @@ public class FunctionalWarmup {
      */
     public static List<String> cleanLabels(List<String> labels) {
         return labels.stream()
-                .filter(x -> !(x.isEmpty()))
                 .map(String::trim)
+                .filter(trim -> !(trim.isEmpty()))
                 .map(String::toUpperCase)
                 .toList();
     }
