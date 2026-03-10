@@ -32,7 +32,7 @@ public class StudyTracker {
            return false;
        }
        else {
-           scoresByLearner.put(name, List.of());
+           scoresByLearner.put(name, new ArrayList<>());
            return true;
        }
     }
@@ -130,7 +130,8 @@ public class StudyTracker {
             return false;
         }
         else {
-            undoStack.pop();
+            UndoStep action = undoStack.pop();
+            action.undo();
             return true;
         }
     }
