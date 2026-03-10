@@ -135,4 +135,7 @@ public class StudyTracker {
             return true;
         }
     }
+
+    // Added method for testing
+    public Map<String, List<Integer>> getScoresByLearner() {return scoresByLearner;}
 }
