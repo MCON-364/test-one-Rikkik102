@@ -25,7 +25,16 @@ public class StudyTracker {
      * Throw IllegalArgumentException if name is null or blank.
      */
     public boolean addLearner(String name) {
-        throw new UnsupportedOperationException();
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name is null or blank");
+        }
+       else if (scoresByLearner.containsKey(name)) {
+           return false;
+       }
+       else {
+           scoresByLearner.put(name, new ArrayList<>());
+           return true;
+       }
     }
 
     /**
@@ -42,7 +51,17 @@ public class StudyTracker {
      * This operation should be undoable.
      */
     public boolean addScore(String name, int score) {
-        throw new UnsupportedOperationException();
+    if (score < 0 || score > 100) {
+        throw new IllegalArgumentException("Invalid score");
+    }
+    else if (!(scoresByLearner.containsKey(name))) {
+            return false;
+        }
+    else {
+        scoresByLearner.get(name).add(score);
+        undoStack.push(() -> scoresByLearner.get(name).removeLast());
+        return true;
+    }
     }
 
     /**
@@ -54,7 +73,15 @@ public class StudyTracker {
      * - the learner has no scores
      */
     public Optional<Double> averageFor(String name) {
-        throw new UnsupportedOperationException();
+        if (scoresFor(name).isEmpty()) {
+            return Optional.empty();
+        }
+        else {
+            return Optional.of(scoresFor(name).get().stream()
+                    .mapToInt(Integer::intValue)
+                    .average()
+                    .getAsDouble());
+        }
     }
 
     /**
@@ -70,7 +97,25 @@ public class StudyTracker {
      * Return Optional.empty() when no average exists.
      */
     public Optional<String> letterBandFor(String name) {
-        throw new UnsupportedOperationException();
+        if (scoresFor(name).isEmpty()) {
+            return Optional.empty();
+        }
+        else {
+            double average = scoresFor(name).get().stream()
+                    .mapToInt(Integer::intValue)
+                    .average()
+                    .getAsDouble();
+
+            int firstNumber = (int)(average / 10);
+            String letterGrade = switch(firstNumber) {
+                case 10, 9 ->  { yield "A";}
+                case 8 -> { yield "B"; }
+                case 7 -> { yield "C"; }
+                case 6 -> { yield "D"; }
+                default -> { yield "F"; }
+            };
+            return Optional.of(letterGrade);
+        }
     }
 
     /**
@@ -81,8 +126,16 @@ public class StudyTracker {
      * Return false if there is nothing to undo.
      */
     public boolean undoLastChange() {
-        throw new UnsupportedOperationException();
+        if  (undoStack.isEmpty()) {
+            return false;
+        }
+        else {
+            UndoStep action = undoStack.pop();
+            action.undo();
+            return true;
+        }
     }
 
-
+    // Added method for testing
+    public Map<String, List<Integer>> getScoresByLearner() {return scoresByLearner;}
 }
